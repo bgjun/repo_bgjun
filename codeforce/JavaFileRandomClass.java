@@ -22,6 +22,7 @@ public class TestMain {
         fc.readFileA();
         fc.readFileB();
         fc.readFileC();
+        fc.readFileD();
         
         RandomTest rt = new RandomTest();
         rt.getRandInt();
@@ -139,9 +140,8 @@ class FileControl {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
     }
-    
+
     public void readFileC() {
         System.out.println("bgjun :: read C file in");
         try {
@@ -163,6 +163,36 @@ class FileControl {
                 }
             }
             fis.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void readFileD() {
+        System.out.println("bgjun :: read D file in");
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("./test.txt"));
+            StringBuffer sb = new StringBuffer();
+            int v;
+            while (true) {
+                v = br.read();
+                if (v == -1) {
+                    System.out.println("read D str = " + sb.toString());
+                    break;
+                }
+                if ((char)v == '\n' || (char)v == ' ' || (char)v == ','){
+                    System.out.println("read D str = " + sb.toString());
+                    sb.delete(0, sb.length());
+                } else {
+                    sb.append((char)v);
+                }
+
+            }
+            br.close();
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
