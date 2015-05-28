@@ -36,6 +36,8 @@ public class Test_java_Random_File_Write_Read_Sort_Write {
         fc.writeArrayForWrite();
         fc.closeFileForWrite();
         
+        rn.cleanup();
+        fc.cleanup();
     }
 }
 
@@ -45,6 +47,32 @@ class FileControl {
     private BufferedReader mBr;
     private String mValue;
     private ArrayList<Long> mArray;
+    
+    public void cleanup() {
+        if (mFos != null) {
+            try {
+                mFos.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            mFos = null;
+        }
+        if (mBr != null) {
+            try {
+                mBr.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            mBr = null;
+        }
+        mValue = null;
+        if (mArray != null) {
+            mArray.clear();
+            mArray = null;
+        }
+    }
     
     public void createReaderForRead(String path) {
         try {
@@ -165,5 +193,11 @@ class RandomNumber {
     
     public long getRandom() {
         return Math.abs(mR.nextLong());
+    }
+    
+    public void cleanup(){
+        if (mR != null) {
+            mR = null;
+        }
     }
 }
