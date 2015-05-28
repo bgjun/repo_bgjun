@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Random;
 
 
-public class JavaFileRandomClass {
+public class TestMain {
     public static void main(String[] args) {
         System.out.println("bgjun :: main hello");
         
@@ -21,6 +21,7 @@ public class JavaFileRandomClass {
         fc.writeFile();
         fc.readFileA();
         fc.readFileB();
+        fc.readFileC();
         
         RandomTest rt = new RandomTest();
         rt.getRandInt();
@@ -88,8 +89,9 @@ class FileControl {
         System.out.println("bgjun :: File out");
         try {
             FileOutputStream fos = new FileOutputStream("./test.txt");
-            byte[] bb = new byte[10];
-            bb = "hello".getBytes();
+            String str = "hello\nhello hello 123 6565 sda 6565as as65as5e a65asd5as,asdijas,qwe989as,akljskd";
+            byte[] bb = new byte[str.length()];
+            bb = str.getBytes();
             fos.write(bb);
             fos.close();
         } catch (FileNotFoundException e) {
@@ -107,7 +109,9 @@ class FileControl {
             BufferedReader br = new BufferedReader(new FileReader("./test.txt"));
             String str;
             str = br.readLine();
-            System.out.println("bgjun :: readA str = " + str);
+            System.out.println("bgjun :: read A str = " + str);
+            str = br.readLine();
+            System.out.println("bgjun :: read A str = " + str);
             br.close();
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
@@ -126,7 +130,7 @@ class FileControl {
             fis.read(b);
             String str;
             str = new String(b);
-            System.out.println("bgjun :: readB str = " + str);
+            System.out.println("bgjun :: read B str = " + str);
             fis.close();
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
@@ -136,6 +140,36 @@ class FileControl {
             e.printStackTrace();
         }
         
+    }
+    
+    public void readFileC() {
+        System.out.println("bgjun :: read C file in");
+        try {
+            FileInputStream fis = new FileInputStream("./test.txt");
+            byte[] b = new byte[fis.available()];
+            StringBuffer sb = new StringBuffer();
+            int v;
+            while (true) {
+                v = fis.read();
+                if (v == -1) {
+                    System.out.println("read C str = " + sb.toString());
+                    break;
+                }
+                if ((char)v == '\n' || (char)v == ' ' || (char)v == ','){
+                    System.out.println("read C str = " + sb.toString());
+                    sb.delete(0, sb.length());
+                } else {
+                    sb.append((char)v);
+                }
+            }
+            fis.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
 
